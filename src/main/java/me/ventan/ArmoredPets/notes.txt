@@ -1,0 +1,46 @@
+Kurczak
+Rzadkosc: pospolity
+Wymagany poziom: 10
+Bonusy:
+Szczescie
+
+Pszczółka
+Rzadkosc : rzadki
+Wymagany poziom : 25
+Bonusy:
+szczęście
+
+PTASZEK
+Rzadkosc: Nietypowy
+Wymagany poziom: 30
+Bonusy:
+Atak
+Obrona
+
+Lis
+Rzadkość: Mityczny
+Wymagany poziom 50
+Bonusy:
+Atak
+Obrona
+Szczescie
+
+Mrówka
+Rzadkość: Boski
+Wymagany poziom: 0
+Bonusy
+Atak
+Obrona
+Szczęście
+Szansa na drop
+
+Slimaczek
+Rzadkosc : Legendarny
+Wymagany poziom : 0
+Bonusy :
+Szczescie
+Obrona
+Atak
+Szansa na drop
+
+§dEXP: §e
