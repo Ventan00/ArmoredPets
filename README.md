@@ -1,4 +1,8 @@
 
+```diff
+- JEST TO WERSJA PRE-RELASE v1.0!!! Nie wszystkie mechaniki opisane poniżej działają!!!!
+```
+
 [![ServerNet](https://i.imgur.com/EwBly0J.png)](https://servernet.pl/)
 # ArmoredPets
 
