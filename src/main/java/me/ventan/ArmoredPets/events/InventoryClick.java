@@ -91,6 +91,7 @@ public class InventoryClick implements Listener {
     private void getRandomPet(Player player) {
         Random random = new Random();
         int chance = random.nextInt(1000);
+        // TODO: 26.02.2021 przerobić do newPetProfile
         if(chance<500){
             //kurczak
             PetProfile pet = new PetProfile(KURCZAK,null,null);
@@ -107,7 +108,7 @@ public class InventoryClick implements Listener {
             String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
             head.setLore(Arrays.asList(ID,Rzadkosc, WymaganyPoziom, EXP, LVL, ChatColor.WHITE + "Bonusy:", Luck,updates));
             player.getInventory().addItem(head);
-        }else if(chance>=500&&chance<750){
+        }else if(chance < 750){
             //pszczolka
             PetProfile pet = new PetProfile(PSZCZOLKA,null,null);
             ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
@@ -124,7 +125,7 @@ public class InventoryClick implements Listener {
             head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,updates));
             player.getInventory().addItem(head);
         }
-        else if(chance>=750&&chance<875){
+        else if(chance < 875){
             //ptaszek
             PetProfile pet = new PetProfile(PTASZEK,null,null);
             ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
@@ -142,7 +143,7 @@ public class InventoryClick implements Listener {
             head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Attack,Obrona,updates));
             player.getInventory().addItem(head);
         }
-        else if(chance>=875&&chance<940){
+        else if(chance < 940){
             //lis
             PetProfile pet = new PetProfile(LIS,null,null);
             ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
@@ -161,7 +162,7 @@ public class InventoryClick implements Listener {
             head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,updates));
             player.getInventory().addItem(head);
         }
-        else if(chance>=940&&chance<980){
+        else if(chance < 980){
             //mrowka
             PetProfile pet = new PetProfile(MROWKA,null,null);
             ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
@@ -181,7 +182,7 @@ public class InventoryClick implements Listener {
             head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,DropChance,updates));
             player.getInventory().addItem(head);
         }
-        else if(chance>=980&&chance<1000){
+        else if(chance < 1000){
             //slimaczek
             PetProfile pet = new PetProfile(SLIMACZEK,null,null);
             ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));

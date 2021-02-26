@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.io.*;
 
 public class FileManager {
+    // TODO: 26.02.2021 przerobić do newPetProfile
     public static boolean readPlayer(Player player) {
         File file = new File("plugins/ArmoredPets/players/"+player.getUniqueId().toString()+".json");
         if(!file.exists())
