@@ -2,13 +2,10 @@ package me.ventan.ArmoredPets.API;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.ventan.ArmoredPets.MainArmoredPets;
-import me.ventan.ArmoredPets.utils.PetProfile;
 import me.ventan.ArmoredPets.Math.MyLvlExp;
-import me.ventan.ArmoredPets.utils.PetProfile.petType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static me.ventan.ArmoredPets.utils.PetProfile.petType.*;
 
 public class PetPlaceholders extends PlaceholderExpansion {
     MainArmoredPets plugin = MainArmoredPets.getInstance();
@@ -35,20 +32,7 @@ public class PetPlaceholders extends PlaceholderExpansion {
 
         if (identifier.compareTo("type")==0) {
             if(plugin.playerHasPet(p)){
-                switch (plugin.getProfileOfPlayersPet(p).getType()){
-                    case KURCZAK:
-                        return "§eKURCZAK";
-                    case PSZCZOLKA:
-                        return "§dPSZCZOLKA";
-                    case PTASZEK:
-                        return "§9PTASZEK";
-                    case MROWKA:
-                        return "§6MROWKA";
-                    case LIS:
-                        return "§cLIS";
-                    case SLIMACZEK:
-                        return "§5SLIMACZEK";
-                }
+                return plugin.getProfileOfPlayersPet(p).getType().nickColor+plugin.getProfileOfPlayersPet(p).getType().toString();
             }
         }
         else if(identifier.compareTo("lvl")==0) {

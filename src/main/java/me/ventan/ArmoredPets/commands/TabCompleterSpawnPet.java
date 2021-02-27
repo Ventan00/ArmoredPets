@@ -1,6 +1,6 @@
 package me.ventan.ArmoredPets.commands;
 
-import me.ventan.ArmoredPets.utils.PetProfile;
+import me.ventan.ArmoredPets.utils.PetType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -15,12 +15,12 @@ public class TabCompleterSpawnPet implements TabCompleter {
         if(args.length==1)
         {
             podpowiedzi = new ArrayList<>();
-            podpowiedzi.add(PetProfile.petType.KURCZAK.toString());
-            podpowiedzi.add(PetProfile.petType.PSZCZOLKA.toString());
-            podpowiedzi.add(PetProfile.petType.SLIMACZEK.toString());
-            podpowiedzi.add(PetProfile.petType.LIS.toString());
-            podpowiedzi.add(PetProfile.petType.MROWKA.toString());
-            podpowiedzi.add(PetProfile.petType.PTASZEK.toString());
+            podpowiedzi.add(PetType.KURCZAK.toString());
+            podpowiedzi.add(PetType.PSZCZOLKA.toString());
+            podpowiedzi.add(PetType.SLIMACZEK.toString());
+            podpowiedzi.add(PetType.LIS.toString());
+            podpowiedzi.add(PetType.MROWKA.toString());
+            podpowiedzi.add(PetType.PTASZEK.toString());
         } else {
             podpowiedzi=null;
         }

@@ -4,24 +4,21 @@ import me.ventan.ArmoredPets.API.PetPlaceholders;
 import me.ventan.ArmoredPets.commands.*;
 import me.ventan.ArmoredPets.events.*;
 import me.ventan.ArmoredPets.utils.MyNPCTrait;
-import me.ventan.ArmoredPets.utils.PetProfile;
+import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.FileManager;
-import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPC;
-import net.citizensnpcs.api.trait.TraitInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
 
 public class MainArmoredPets extends JavaPlugin {
     private static MainArmoredPets instance;
-    private HashMap<Player, PetProfile> petsOfPlayers;
+    private HashMap<Player, NewPetProfile> petsOfPlayers;
 
     @Override
     public void onEnable(){
@@ -71,15 +68,14 @@ public class MainArmoredPets extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Wylaczanie");
-        FileManager.SaveLastID(PetProfile.LastID);
+        FileManager.SaveLastID(NewPetProfile.LastID);
         getServer().getOnlinePlayers().forEach(player ->
         {
             if(playerHasPet(player))
             {
                 FileManager.savePlayer(player);
-                PetProfile pet = getProfileOfPlayersPet(player);
-                pet.getInstance().remove();
-                pet.interupt();
+                NewPetProfile pet = getProfileOfPlayersPet(player);
+                pet.despawn();
                 MainArmoredPets.getInstance().removePetFromPlayer(player);}
 
         });
@@ -88,11 +84,23 @@ public class MainArmoredPets extends JavaPlugin {
     public static MainArmoredPets getInstance(){
         return instance;
     }
-    public void addPetToPlayer(Player player, PetProfile petProfile){
+    public void addPetToPlayer(Player player, NewPetProfile petProfile){
         petsOfPlayers.put(player,petProfile);
     }
-    public PetProfile getProfileOfPlayersPet(Player player){
+    public NewPetProfile getProfileOfPlayersPet(Player player){
         return petsOfPlayers.get(player);
+    }
+    public boolean petIsSpanwed(NewPetProfile profile){
+        return petsOfPlayers.containsValue(profile);
+    }
+    public Player getPetOwner(NewPetProfile profile){
+        Player returnVal;
+        return petsOfPlayers.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue()==profile)
+                .findFirst()
+                .get()
+                .getKey();
     }
     public boolean playerHasPet(Player player){return petsOfPlayers.containsKey(player);}
     public void removePetFromPlayer(Player player){

@@ -4,7 +4,7 @@ import com.destroystokyo.paper.ParticleBuilder;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyMath;
 import me.ventan.ArmoredPets.utils.FileManager;
-import me.ventan.ArmoredPets.utils.PetProfile;
+import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.skullCreator;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -28,154 +28,22 @@ public class CommandZalozPet implements CommandExecutor {
             Player player = (Player) commandSender;
             if(MainArmoredPets.getInstance().playerHasPet(player))
                 return false;
-            float[] parametryToAdd = calculateComplexParameters(player.getLocation().getYaw());
-            Location loc = player.getLocation().add(parametryToAdd[0],0.5,parametryToAdd[1]);
             ItemStack item = player.getInventory().getItemInMainHand();
             if(item==null)
             {
                 return false;
             }
-            String ID =null;
-            String EXP=null;
-            String LVL=null;
-            String Luck=null;
-            String Attack=null;
-            String Defence=null;
-            String Drop=null;
-            String updates=null;
+            List<String> parameters = item.getLore();
+            String ID =parameters.get(0);
+            String EXP=parameters.get(4);
+            String Luck = parameters.get(6);
+            String Attack = parameters.get(7);
+            String Defence = parameters.get(8);
+            String Drop = parameters.get(9);
+            String updates = parameters.get(10);
             String Type = item.getItemMeta().getDisplayName().substring(2);
-            switch (item.getI18NDisplayName()){
-                case "§eKURCZAK":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Luck = parameters.get(6);
-                    updates = parameters.get(7);
-                    break;
-                }
-                case "§dPSZCZOLKA":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Luck = parameters.get(6);
-                    updates = parameters.get(7);
-                    break;
-                }
-                case "§9PTASZEK":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Attack = parameters.get(6);
-                    Defence = parameters.get(7);
-                    updates = parameters.get(8);
-                    break;
-                }
-                case "§cLIS":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Luck = parameters.get(6);
-                    Attack = parameters.get(7);
-                    Defence = parameters.get(8);
-                    updates = parameters.get(9);
-                    break;
-                }
-                case "§6MROWKA":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Luck = parameters.get(6);
-                    Attack = parameters.get(7);
-                    Defence = parameters.get(8);
-                    Drop = parameters.get(9);
-                    updates = parameters.get(10);
-                    break;
-                }
-                case "§5SLIMACZEK":
-                {
-                    List<String> parameters = item.getLore();
-                    ID = parameters.get(0);
-                    EXP = parameters.get(3);
-                    LVL = parameters.get(4);
-                    Attack = parameters.get(6);
-                    Defence = parameters.get(7);
-                    Luck = parameters.get(8);
-                    Drop = parameters.get(9);
-                    updates = parameters.get(10);
-                    break;
-                }
-                default:
-                    return false;
-            }
-            ArmorStand armorStand = (ArmorStand) loc.getWorld().spawn(loc,ArmorStand.class);
-            BukkitTask task =  new BukkitRunnable(){
-                final float maxval=0.3f;
-                final float minval=-0.3f;
-                float val=0f;
-                long timestamp=System.currentTimeMillis()+40*1000;
-                float toAdd=0.05f;
-
-                @Override
-                public void run() {
-                    val+=toAdd;
-                    if(val>=maxval)
-                        toAdd=-0.05f;
-                    if(val<=minval)
-                        toAdd=0.05f;
-                    float[] parametryToAdd = calculateComplexParameters(player.getLocation().getYaw());
-                    armorStand.teleport(player.getLocation().add(parametryToAdd[0],1+val,parametryToAdd[1]));
-                    if(timestamp<=System.currentTimeMillis()){
-                        timestamp=System.currentTimeMillis()+40*1000;
-                        player.getWorld().playSound(armorStand.getLocation(), Sound.ENTITY_BAT_AMBIENT, 3.0f,0.764f);
-                    }
-                    ParticleBuilder particleBuilder = new ParticleBuilder(Particle.END_ROD);
-                    particleBuilder.count(1);
-                    particleBuilder.receivers(10);
-                    //ustawic pozycje
-                }
-            }.runTaskTimer(MainArmoredPets.getInstance(),20,1); //animating moving
-            MainArmoredPets.getInstance().addPetToPlayer(player,new PetProfile(
-                    eID(ID), Type, eEXP(EXP), Integer.parseInt(LVL.substring(9)),stf(Luck),stf(Attack),stf(Defence),stf(Drop),eUpdates(updates),armorStand,task
-            ));
-            ItemStack head = new ItemStack(skullCreator.getSkull(MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getTexture()));
-            armorStand.setHelmet(head);
-            armorStand.setGravity(false);
-            armorStand.setCanMove(true);
-            armorStand.setCanPickupItems(false);
-            armorStand.setCustomNameVisible(true);
-            armorStand.setVisible(false);
-            armorStand.setCollidable(false);
-            armorStand.setSmall(true);
-            switch (Type.toLowerCase()){
-                case "kurczak":
-                    armorStand.setCustomName(ChatColor.YELLOW+"Kurczak"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-                case "pszczolka":
-                    armorStand.setCustomName(ChatColor.LIGHT_PURPLE+"Pszczolka"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-                case "slimaczek":
-                    armorStand.setCustomName(ChatColor.DARK_PURPLE+"Slimaczek"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-                case "lis":
-                    armorStand.setCustomName(ChatColor.RED+"Lis"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-                case "mrowka":
-                    armorStand.setCustomName(ChatColor.GOLD+"Mrowka"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-                case "ptaszek":
-                    armorStand.setCustomName(ChatColor.BLUE+"Ptaszek"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getLVL()+ChatColor.WHITE+")");
-                    break;
-            }
+            NewPetProfile profile = new NewPetProfile(eID(ID),Type,eEXP(EXP),stf(Luck),stf(Attack),stf(Defence),stf(Drop),eUpdates(updates));
+            profile.spawn(player);
             player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
             FileManager.savePlayer(player);
         }
@@ -185,13 +53,6 @@ public class CommandZalozPet implements CommandExecutor {
         return true;
     }
 
-    private float[] calculateComplexParameters(float yaw) {
-        float[] result = new float[2];
-        yaw+=180;
-        result[0]= 1.5f*(float) MyMath.getTable().getCos((int) yaw);
-        result[1]= 1.5f*(float) MyMath.getTable().getSine((int) yaw);
-        return result;
-    }
 
     //string to float
     public float stf(String input){

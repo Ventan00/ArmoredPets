@@ -12,10 +12,10 @@ public class SneakNickHide implements Listener {
         Player player = event.getPlayer();
         if(MainArmoredPets.getInstance().playerHasPet(player)){
             if(event.isSneaking()){
-                MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getInstance().setCustomNameVisible(false);
+                MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getArmorstand().setCustomNameVisible(false);
             }
             else{
-                MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getInstance().setCustomNameVisible(true);
+                MainArmoredPets.getInstance().getProfileOfPlayersPet(player).getArmorstand().setCustomNameVisible(true);
             }
         }
     }

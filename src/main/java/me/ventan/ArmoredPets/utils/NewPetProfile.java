@@ -1,16 +1,24 @@
 package me.ventan.ArmoredPets.utils;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import com.google.gson.JsonObject;
+import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyLvlExp;
+import me.ventan.ArmoredPets.Math.MyMath;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class NewPetProfile {
     public static int LastID=0;
@@ -24,6 +32,7 @@ public class NewPetProfile {
     //lvl parameters
     private long exp;
     private int LVL=0;
+    private static final float expModifier = 0.07f;
 
     //abilities
     private float luck;
@@ -57,29 +66,81 @@ public class NewPetProfile {
         this.defence = defence;
         this.drop = drop;
         this.updates = updates;
+        while(MyLvlExp.instance.getPd(LVL+1)<exp)
+            LVL++;
     }
 
-    public void spawn(Player player){
+    public boolean spawn(Player player){
+        if(MainArmoredPets.getInstance().playerHasPet(player))
+            return false;
+        float[] params = MyMath.getInstance().calculateComplexParameters(player.getLocation().getYaw());
+        Location loc = player.getLocation().add(params[0],0.5,params[1]);
+        armorstand = (ArmorStand) loc.getWorld().spawn(loc,ArmorStand.class);
+        armorstand.setCustomName(type.nickColor+type.toString().substring(0, 1).toUpperCase()+type.toString().substring(1)  +ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+LVL+ChatColor.WHITE+")");
+        armorstand.setGravity(false);
+        armorstand.setCanMove(true);
+        armorstand.setCustomNameVisible(true);
+        armorstand.setVisible(false);
+        armorstand.setCanPickupItems(false);
+        armorstand.setCollidable(false);
+        armorstand.setSmall(true);
+        ItemStack head = new ItemStack(skullCreator.getSkull(type.texture));
+        armorstand.setHelmet(head);
+        animation= new BukkitRunnable() {
+            final float maxval=0.3f;
+            final float minval=-0.3f;
+            float val=0f;
+            float toAdd=0.05f;
+            long timestamp=System.currentTimeMillis()+40*1000;
 
+            @Override
+            public void run() {
+                val+=toAdd;
+                if(val>=maxval)
+                    toAdd=-0.05f;
+                if(val<=minval)
+                    toAdd=0.05f;
+                float[] parametryToAdd = MyMath.getInstance().calculateComplexParameters(player.getLocation().getYaw());
+                armorstand.teleport(player.getLocation().add(parametryToAdd[0],1+val,parametryToAdd[1]));
+                if(timestamp<=System.currentTimeMillis()){
+                    timestamp=System.currentTimeMillis()+40*1000;
+                    player.getWorld().playSound(armorstand.getLocation(), Sound.ENTITY_BAT_AMBIENT, 3.0f,1.094f);
+                }
+                ParticleBuilder particleBuilder = new ParticleBuilder(Particle.END_ROD);
+                particleBuilder.count(1);
+                particleBuilder.receivers(10);
+            }
+        }.runTaskTimer(MainArmoredPets.getInstance(),20,1);
+        MainArmoredPets.getInstance().addPetToPlayer(player,this);
+        FileManager.savePlayer(player);
+        return true;
     }
 
-    public void despawn(){
-
+    public boolean despawn(){
+        if(!MainArmoredPets.getInstance().petIsSpanwed(this))
+            return false;
+        animation.cancel();
+        armorstand.remove();
+        MainArmoredPets.getInstance().removePetFromPlayer(MainArmoredPets.getInstance().getPetOwner(this));
+        return true;
     }
 
     public ItemStack getItem(){
         ItemStack head = new ItemStack(skullCreator.getSkull(type.texture));
         ItemMeta itemMeta = head.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.YELLOW + type.toString());
+        itemMeta.setDisplayName(type.nickColor + type.toString());
         head.setItemMeta(itemMeta);
         String ID = ChatColor.DARK_GRAY+"ID: " + this.ID;
         String rarity = ChatColor.WHITE + "Rzadkosc: " + type.rarity.color+type.rarity.toString();
         String minlvl = ChatColor.WHITE + "Wymagany poziom: " +ChatColor.GREEN+ type.minLvl;
         String Lvl = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+LVL;
         String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(exp)+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(LVL);
-        String Luck = ChatColor.GREEN+"Szczescie: "+luck+"%";
+        String Luck = ChatColor.GREEN+"Szczescie: "+luck;
+        String Attack = ChatColor.RED+"Atak: "+attack;
+        String Obrona = ChatColor.BLUE+"Atak: "+defence;
+        String Drop = ChatColor.GOLD+"Drop: "+drop;
         String updts= ChatColor.DARK_GRAY+"Ulepszenia: "+updates+"/3";
-        head.setLore(Arrays.asList(ID,rarity,minlvl,EXP,Lvl,ChatColor.WHITE+"Bonusy:",Luck,updts));
+        head.setLore(Arrays.asList(ID,rarity,minlvl,EXP,Lvl,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,Drop,updts));
         return head;
     }
 
@@ -119,6 +180,10 @@ public class NewPetProfile {
         return updates;
     }
 
+    public ArmorStand getArmorstand(){
+        return armorstand;
+    }
+
     public boolean addUpdates(){
         if (updates<3) {
             updates++;
@@ -145,6 +210,22 @@ public class NewPetProfile {
     }
 
     // TODO: 26.02.2021  dopisać system zwiększania lvl i komunikatów do gracza
+    public void addExp(long amount){
+        exp+=amount;
+        if(MyLvlExp.instance.getPd(LVL+1)<exp){
+            while(MyLvlExp.instance.getPd(LVL+1)<exp) {
+                LVL += 1;
+                attack += attack * expModifier;
+                defence += defence * expModifier;
+                luck += luck * expModifier;
+                drop += drop * expModifier;
+            }
+            MainArmoredPets.getInstance().getPetOwner(this).sendMessage(ChatColor.AQUA+"Twój pet awansował na "+ChatColor.GREEN+ChatColor.BOLD+LVL+ChatColor.AQUA+" poziom!!!");
+            //change display name
+            armorstand.setCustomName(type.nickColor+type.toString().substring(0, 1).toUpperCase()+type.toString().substring(1)  +ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+LVL+ChatColor.WHITE+")");
+        }
+    }
+
 
     public JsonObject toJsonObject(){
         JsonObject me = new JsonObject();

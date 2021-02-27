@@ -3,7 +3,7 @@ package me.ventan.ArmoredPets.events;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyLvlExp;
 import me.ventan.ArmoredPets.utils.FileManager;
-import me.ventan.ArmoredPets.utils.PetProfile;
+import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.skullCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.Random;
 
-import static me.ventan.ArmoredPets.utils.PetProfile.petType.*;
+import static me.ventan.ArmoredPets.utils.PetType.*;
 
 
 //gui manager
@@ -94,113 +94,29 @@ public class InventoryClick implements Listener {
         // TODO: 26.02.2021 przerobić do newPetProfile
         if(chance<500){
             //kurczak
-            PetProfile pet = new PetProfile(KURCZAK,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.YELLOW + pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE + "Rzadkosc: " + ChatColor.GRAY + " pospolity";
-            String WymaganyPoziom = ChatColor.WHITE + "Wymagany poziom: " + ChatColor.GREEN + "10";
-            String LVL = ChatColor.WHITE + "Lvl: " + ChatColor.GREEN + pet.getLVL();
-            String EXP = ChatColor.WHITE + "Exp: " + ChatColor.GREEN + generateExp(pet.getExp()) + ChatColor.WHITE + "/" + ChatColor.GREEN + generateMaxEXPForLevel(pet.getLVL());
-            String Luck = ChatColor.GREEN + "Szczescie: " + pet.getLuck()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc, WymaganyPoziom, EXP, LVL, ChatColor.WHITE + "Bonusy:", Luck,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(KURCZAK);
+            player.getInventory().addItem(pet.getItem());
         }else if(chance < 750){
             //pszczolka
-            PetProfile pet = new PetProfile(PSZCZOLKA,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE+pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE+"Rzadkosc: "+ChatColor.DARK_PURPLE +" rzadki";
-            String WymaganyPoziom = ChatColor.WHITE+"Wymagany poziom: "+ChatColor.GREEN+"25";
-            String LVL = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+pet.getLVL();
-            String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(pet.getExp())+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(pet.getLVL());
-            String Luck = ChatColor.GREEN+"Szczescie: "+pet.getLuck()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(PSZCZOLKA);
+            player.getInventory().addItem(pet.getItem());
         }
         else if(chance < 875){
-            //ptaszek
-            PetProfile pet = new PetProfile(PTASZEK,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.BLUE+pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE+"Rzadkosc: "+ChatColor.LIGHT_PURPLE +" Nietypowy";
-            String WymaganyPoziom = ChatColor.WHITE+"Wymagany poziom: "+ChatColor.GREEN+"30";
-            String LVL = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+pet.getLVL();
-            String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(pet.getExp())+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(pet.getLVL());
-            String Attack = ChatColor.RED+"Atak: "+pet.getAttack()+"%";
-            String Obrona = ChatColor.BLUE+"Obrona: "+pet.getDefence()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Attack,Obrona,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(PTASZEK);
+            player.getInventory().addItem(pet.getItem());
         }
         else if(chance < 940){
             //lis
-            PetProfile pet = new PetProfile(LIS,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.RED+pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE+"Rzadkosc: "+ChatColor.BLUE +" Mityczny";
-            String WymaganyPoziom = ChatColor.WHITE+"Wymagany poziom: "+ChatColor.GREEN+"50";
-            String LVL = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+pet.getLVL();
-            String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(pet.getExp())+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(pet.getLVL());
-            String Attack = ChatColor.RED+"Atak: "+pet.getAttack()+"%";
-            String Obrona = ChatColor.BLUE+"Obrona: "+pet.getDefence()+"%";
-            String Luck = ChatColor.GREEN+"Szczescie: "+pet.getLuck()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(LIS);
+            player.getInventory().addItem(pet.getItem());
         }
         else if(chance < 980){
-            //mrowka
-            PetProfile pet = new PetProfile(MROWKA,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GOLD+pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE+"Rzadkosc: "+ChatColor.GOLD +" Boski";
-            String WymaganyPoziom = ChatColor.WHITE+"Wymagany poziom: "+ChatColor.GREEN+"0";
-            String LVL = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+pet.getLVL();
-            String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(pet.getExp())+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(pet.getLVL());
-            String Attack = ChatColor.RED+"Atak: "+pet.getAttack()+"%";
-            String Obrona = ChatColor.BLUE+"Obrona: "+pet.getDefence()+"%";
-            String Luck = ChatColor.GREEN+"Szczescie: "+pet.getLuck()+"%";
-            String DropChance = ChatColor.GOLD+"Drop skrzyni: "+pet.getDrop()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,DropChance,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(MROWKA);
+            player.getInventory().addItem(pet.getItem());
         }
         else if(chance < 1000){
-            //slimaczek
-            PetProfile pet = new PetProfile(SLIMACZEK,null,null);
-            ItemStack head = new ItemStack(skullCreator.getSkull(pet.getTexture()));
-            ItemMeta itemMeta = head.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.DARK_PURPLE+pet.getType().toString());
-            head.setItemMeta(itemMeta);
-            String ID = ChatColor.DARK_GRAY+"ID: " + pet.getID();
-            String Rzadkosc = ChatColor.WHITE+"Rzadkosc: "+ChatColor.YELLOW +" Legendarny";
-            String WymaganyPoziom = ChatColor.WHITE+"Wymagany poziom: "+ChatColor.GREEN+"0";
-            String LVL = ChatColor.WHITE+"Lvl: "+ChatColor.GREEN+pet.getLVL();
-            String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(pet.getExp())+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(pet.getLVL());
-            String Attack = ChatColor.RED+"Atak: "+pet.getAttack()+"%";
-            String Obrona = ChatColor.BLUE+"Obrona: "+pet.getDefence()+"%";
-            String Luck = ChatColor.GREEN+"Szczescie: "+pet.getLuck()+"%";
-            String DropChance = ChatColor.GOLD+"Drop skrzyni: "+pet.getDrop()+"%";
-            String updates= ChatColor.DARK_GRAY+"Ulepszenia: "+pet.getUpdates()+"/3";
-            head.setLore(Arrays.asList(ID,Rzadkosc,WymaganyPoziom,EXP,LVL,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,DropChance,updates));
-            player.getInventory().addItem(head);
+            NewPetProfile pet = new NewPetProfile(SLIMACZEK);
+            player.getInventory().addItem(pet.getItem());
         }
     }
 
@@ -228,7 +144,7 @@ public class InventoryClick implements Listener {
     }
 
     private void addRandomAbilityToPet(Player player) {
-        PetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(player);
+        NewPetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(player);
         if(profile.addUpdates()){
             Random random =  new Random();
             int chance = random.nextInt(100);
@@ -260,39 +176,13 @@ public class InventoryClick implements Listener {
     }
 
     private void addLvlToPet(Player p) {
-        PetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(p);
+        NewPetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(p);
         profile.addExp(MyLvlExp.instance.getPd(profile.getLVL()+9));
-        for(int i=0;i<10&&profile.getLVL()!=105;i++)
-            profile.addLvl();
-        //change display name
-        ArmorStand instance = profile.getInstance();
-        switch (profile.getType()){
-            case KURCZAK:
-                instance.setCustomName(ChatColor.YELLOW+"Kurczak"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-            case PSZCZOLKA:
-                instance.setCustomName(ChatColor.LIGHT_PURPLE+"Pszczolka"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-            case SLIMACZEK:
-                instance.setCustomName(ChatColor.DARK_PURPLE+"Slimaczek"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-            case LIS:
-                instance.setCustomName(ChatColor.RED+"Lis"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-            case MROWKA:
-                instance.setCustomName(ChatColor.GOLD+"Mrowka"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-            case PTASZEK:
-                instance.setCustomName(ChatColor.BLUE+"Ptaszek"+ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+profile.getLVL()+ChatColor.WHITE+")");
-                break;
-        }
     }
 
     private void destroypet(Player player) {
-        PetProfile pet = MainArmoredPets.getInstance().getProfileOfPlayersPet(player);
-        pet.interupt();
-        pet.getInstance().remove();
-        MainArmoredPets.getInstance().removePetFromPlayer(player);
+        NewPetProfile pet = MainArmoredPets.getInstance().getProfileOfPlayersPet(player);
+        pet.despawn();
         FileManager.deletePlayer(player);
     }
 
@@ -339,72 +229,4 @@ public class InventoryClick implements Listener {
 
     }
 
-    public String generateMaxEXPForLevel(int LVL){
-        StringBuilder output = new StringBuilder();
-        String longL= Long.toString(MyLvlExp.instance.getPd(LVL));
-        int length = longL.length();
-        if(length>5) {
-            if ((length + 1) % 3 == 1) {
-                output.append(longL.charAt(0));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else if ((length + 1) % 3 == 2) {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                output.append(longL.charAt(2));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            }
-            output.append('k');
-            return output.toString();
-        }
-        else{
-            return longL;
-        }
-    }
-    public String generateExp(long EXP){
-        StringBuilder output = new StringBuilder();
-        String longL = String.valueOf(EXP);
-        int length = longL.length();
-        if(length>5) {
-            if ((length + 1) % 3 == 1) {
-                output.append(longL.charAt(0));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else if ((length + 1) % 3 == 2) {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                output.append(longL.charAt(2));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            }
-            output.append('k');
-            return output.toString();
-        }
-        else{
-            return longL;
-        }
-    }
 }
