@@ -55,10 +55,10 @@ Instrukcja:
 - plik konfiguracyjny do nazw przedmiotów ulepszania
 - wsparcie od wersji 1.8 do 1.16.2
 - wsparcie dla Citizensów
-- oddzielny, konfigurowalny plugin do zarządzania systemem RPG/ekonomią serwera do którego ArmoredPets będzie dodatkiem
 - powstanie API do pluginu opisane w Javie
 - oddzielny plik z komunikatami
 - wersja angielska
+- zostanie stworzone wiki
 - zostaną dodane następujące placeholdery: 
 
 | Placeholder | Opis |
