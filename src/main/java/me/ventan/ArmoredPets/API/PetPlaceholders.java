@@ -2,16 +2,19 @@ package me.ventan.ArmoredPets.API;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.ventan.ArmoredPets.MainArmoredPets;
-import me.ventan.ArmoredPets.Math.MyLvlExp;
+import me.ventan.ArmoredPets.utils.NewPetProfile;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class PetPlaceholders extends PlaceholderExpansion {
     MainArmoredPets plugin = MainArmoredPets.getInstance();
     @Override
     public boolean canRegister(){
-        return plugin.getServer().getPluginManager().isPluginEnabled("NPCs");
+        return plugin.getServer().getPluginManager().isPluginEnabled("Citizens");
     }
     @Override
     public @NotNull String getIdentifier() {
@@ -25,11 +28,10 @@ public class PetPlaceholders extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.0.0";
+        return "1.0.1";
     }
     @Override
     public String onPlaceholderRequest(Player p, String identifier) {
-
         if (identifier.compareTo("type")==0) {
             if(plugin.playerHasPet(p)){
                 return plugin.getProfileOfPlayersPet(p).getType().nickColor+plugin.getProfileOfPlayersPet(p).getType().toString();
@@ -43,91 +45,60 @@ public class PetPlaceholders extends PlaceholderExpansion {
         }
         else if(identifier.compareTo("exp")==0) {
             if(plugin.playerHasPet(p)){
-                return generateExp(plugin.getProfileOfPlayersPet(p).getExp());
+                return NewPetProfile.generateExp(plugin.getProfileOfPlayersPet(p).getExp());
             }
             else return "Brak peta!";
         }
         else if(identifier.compareTo("maxExp")==0){
             if(plugin.playerHasPet(p)){
-                return generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
+                return NewPetProfile.generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
             }
             else return "Brak peta!";
         }
-        else if(identifier.compareTo("allExp")==0)
-        {
+        else if(identifier.compareTo("allExp")==0) {
             if(plugin.playerHasPet(p)){
-                return generateExp(plugin.getProfileOfPlayersPet(p).getExp())+"/"+generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
+                return NewPetProfile.generateExp(plugin.getProfileOfPlayersPet(p).getExp())+"/"+NewPetProfile.generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
             }
             else return "Brak peta!";
         }
+        else {
+            //test placeholder add points
+            Pattern pattern = Pattern.compile("(dodaj_)(.*)(_)(\\d+\\.*\\d*)");
+            Matcher matcher = pattern.matcher(identifier);
+            if(matcher.find()){
+                if(!MainArmoredPets.getInstance().playerHasPet(p)){
+                    return String.valueOf(false);
+                }
+                switch (matcher.group(2)){
+                    case "atak":{
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addAttack(Float.parseFloat(matcher.group(4)));
+                        return String.valueOf(true);
+                    }
+                    case "obrona":{
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addDefence(Float.parseFloat(matcher.group(4)));
+                        return String.valueOf(true);
+                    }
+                    case "szczescie":{
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addLuck(Float.parseFloat(matcher.group(4)));
+                        return String.valueOf(true);
+                    }
+                    case "drop":{
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addDrop(Float.parseFloat(matcher.group(4)));
+                        return String.valueOf(true);
+                    }
+                    case "exp":{
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addExp(Long.parseLong(matcher.group(4)));
+                        return String.valueOf(true);
+                    }
+                    default:
+                        return String.valueOf(false);
+                }
+            }
+            return null;
+        }
+        //idk why compiler want's that 0.o
         return null;
+
     }
-    private String generateMaxEXPForLevel(int LVL){
-        StringBuilder output = new StringBuilder();
-        String longL= Long.toString(MyLvlExp.instance.getPd(LVL));
-        int length = longL.length();
-        if(length>5) {
-            if ((length + 1) % 3 == 1) {
-                output.append(longL.charAt(0));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else if ((length + 1) % 3 == 2) {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                output.append(longL.charAt(2));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            }
-            output.append('k');
-            return output.toString();
-        }
-        else{
-            return longL;
-        }
-    }
-    private String generateExp(long EXP){
-        StringBuilder output = new StringBuilder();
-        String longL = String.valueOf(EXP);
-        int length = longL.length();
-        if(length>5) {
-            if ((length + 1) % 3 == 1) {
-                output.append(longL.charAt(0));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else if ((length + 1) % 3 == 2) {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            } else {
-                output.append(longL.charAt(0));
-                output.append(longL.charAt(1));
-                output.append(longL.charAt(2));
-                if (longL.length() > 6)
-                    output.append('k');
-                if (longL.length() > 9)
-                    output.append('k');
-            }
-            output.append('k');
-            return output.toString();
-        }
-        else{
-            return longL;
-        }
-    }
+
 }

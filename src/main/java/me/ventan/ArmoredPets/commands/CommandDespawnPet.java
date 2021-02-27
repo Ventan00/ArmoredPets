@@ -1,18 +1,12 @@
 package me.ventan.ArmoredPets.commands;
 
 import me.ventan.ArmoredPets.MainArmoredPets;
-import me.ventan.ArmoredPets.Math.MyLvlExp;
 import me.ventan.ArmoredPets.utils.FileManager;
-import me.ventan.ArmoredPets.utils.skullCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 
 public class CommandDespawnPet implements CommandExecutor {
@@ -33,6 +27,11 @@ public class CommandDespawnPet implements CommandExecutor {
         }
         else{
             //// TODO: 27.02.2021 usuwanie peta w konosoli dla gracza
+            if(strings.length>0){
+                MainArmoredPets.getInstance().getServer().getOnlinePlayers()
+                        .stream()
+                        .filter(player -> player.getName().compareTo(strings[0])==0);
+            }
             commandSender.sendMessage("Później zaimplementuję tę funkcję dla konsoli ;)");
         }
         return true;

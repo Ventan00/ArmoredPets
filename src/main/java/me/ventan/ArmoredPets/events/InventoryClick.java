@@ -91,7 +91,6 @@ public class InventoryClick implements Listener {
     private void getRandomPet(Player player) {
         Random random = new Random();
         int chance = random.nextInt(1000);
-        // TODO: 26.02.2021 przerobić do newPetProfile
         if(chance<500){
             //kurczak
             NewPetProfile pet = new NewPetProfile(KURCZAK);
@@ -114,7 +113,7 @@ public class InventoryClick implements Listener {
             NewPetProfile pet = new NewPetProfile(MROWKA);
             player.getInventory().addItem(pet.getItem());
         }
-        else if(chance < 1000){
+        else {
             NewPetProfile pet = new NewPetProfile(SLIMACZEK);
             player.getInventory().addItem(pet.getItem());
         }
@@ -153,17 +152,17 @@ public class InventoryClick implements Listener {
                 profile.addAttack(1);
                 player.sendMessage(ChatColor.BLUE+"Dodano +1 do ataku peta");
             }
-            else if(chance>=25&&chance<50){
+            else if(chance<50){
                 //defence
                 profile.addDefence(1);
                 player.sendMessage(ChatColor.BLUE+"Dodano +1 do obrony peta");
             }
-            else if(chance>=50&&chance<75){
+            else if(chance<75){
                 //luck
                 profile.addLuck(2);
                 player.sendMessage(ChatColor.BLUE+"Dodano +2 do szczęścia peta");
             }
-            else if(chance>=75&&chance<100){
+            else if(chance<100){
                 //drop
                 profile.addDrop(0.5f);
                 player.sendMessage(ChatColor.BLUE+"Dodano +0.5 do szansy na drop skrzyni peta");

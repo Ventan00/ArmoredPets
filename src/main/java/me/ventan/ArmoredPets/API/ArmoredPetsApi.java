@@ -1,17 +1,10 @@
 package me.ventan.ArmoredPets.API;
 
 import me.ventan.ArmoredPets.MainArmoredPets;
-import me.ventan.ArmoredPets.Math.MyLvlExp;
 import me.ventan.ArmoredPets.utils.FileManager;
 import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.PetType;
-import me.ventan.ArmoredPets.utils.skullCreator;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class ArmoredPetsApi {
     public void savePetofPlayer(Player player){

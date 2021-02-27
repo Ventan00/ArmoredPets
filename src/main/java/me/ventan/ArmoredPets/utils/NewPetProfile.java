@@ -17,7 +17,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
-import java.util.List;
 
 
 public class NewPetProfile {
@@ -56,10 +55,10 @@ public class NewPetProfile {
         updates=0;
     }
 
-    //on reload constructor
+    //on reload and put on constructor
     public NewPetProfile(int ID, String type, long exp, float luck,float attack,float defence,float drop, int updates){
         this.ID = ID;
-        this.type = PetType.valueOf(type.toUpperCase());
+        this.type = PetType.typeOrNull(type);
         this.exp = exp;
         this.luck = luck;
         this.attack = attack;
@@ -240,7 +239,7 @@ public class NewPetProfile {
         return me;
     }
 
-    public String generateMaxEXPForLevel(int LVL){
+    public static String generateMaxEXPForLevel(int LVL){
         StringBuilder output = new StringBuilder();
         String longL= Long.toString(MyLvlExp.instance.getPd(LVL));
         int length = longL.length();
@@ -274,7 +273,7 @@ public class NewPetProfile {
             return longL;
         }
     }
-    public String generateExp(long EXP){
+    public static String generateExp(long EXP){
         StringBuilder output = new StringBuilder();
         String longL = String.valueOf(EXP);
         int length = longL.length();

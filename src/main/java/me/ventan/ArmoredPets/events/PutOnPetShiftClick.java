@@ -1,5 +1,6 @@
 package me.ventan.ArmoredPets.events;
 
+import me.ventan.ArmoredPets.utils.PetType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +14,9 @@ public class PutOnPetShiftClick implements Listener {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             Player player = event.getPlayer();
             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
+            PetType type = PetType.typeOrNull(item.getI18NDisplayName().substring(2));
             // TODO: 27.02.2021 rozpisać to sensowniej 
-            if(player.isSneaking() && (item.getI18NDisplayName().equals("§eKURCZAK") || item.getI18NDisplayName().equals("§dPSZCZOLKA") ||item.getI18NDisplayName().equals("§9PTASZEK") ||item.getI18NDisplayName().equals("§cLIS") || item.getI18NDisplayName().equals("§6MROWKA") || item.getI18NDisplayName().equals("§5SLIMACZEK"))){
+            if(player.isSneaking()){
                 player.performCommand("zalozpet");
                 event.setCancelled(true);
             }

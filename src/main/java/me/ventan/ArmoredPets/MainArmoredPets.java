@@ -76,7 +76,7 @@ public class MainArmoredPets extends JavaPlugin {
                 FileManager.savePlayer(player);
                 NewPetProfile pet = getProfileOfPlayersPet(player);
                 pet.despawn();
-                MainArmoredPets.getInstance().removePetFromPlayer(player);}
+            }
 
         });
         petsOfPlayers=null;
@@ -94,7 +94,6 @@ public class MainArmoredPets extends JavaPlugin {
         return petsOfPlayers.containsValue(profile);
     }
     public Player getPetOwner(NewPetProfile profile){
-        Player returnVal;
         return petsOfPlayers.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue()==profile)

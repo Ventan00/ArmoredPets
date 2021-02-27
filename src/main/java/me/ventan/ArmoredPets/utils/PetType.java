@@ -86,4 +86,13 @@ public enum PetType {
         this.rarity = rarity;
         this.nickColor = nickColor;
     }
+    public static PetType typeOrNull(String name){
+        try{
+            PetType retval = valueOf(name.toUpperCase());
+            return retval;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
 }
