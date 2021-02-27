@@ -63,7 +63,7 @@ Instrukcja:
 
 | Placeholder | Opis |
 | ------ | ------ |
-| %pet_dodajexp_liczba% | zwiększa exp zwierzaka o podaną liczbę |
+| %pet_dodaj_exp_liczba% | zwiększa exp zwierzaka o podaną liczbę |
 | %pet_dodaj_atak_liczba% | dodaje liczbę do ataku peta |
 | %pet_dodaj_obrona_liczba% | dodaje liczbę do obrony peta |
 | %pet_dodaj_szczescie_liczba% | dodaje liczbę do szczęścia peta |
