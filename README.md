@@ -63,7 +63,6 @@ Instrukcja:
 
 | Placeholder | Opis |
 | ------ | ------ |
-| %pet_lvlup% | zwiększa poziom zwierzaka o 1 dla danego użytkownika |
 | %pet_dodajexp_liczba% | zwiększa exp zwierzaka o podaną liczbę |
 | %pet_dodaj_atak_liczba% | dodaje liczbę do ataku peta |
 | %pet_dodaj_obrona_liczba% | dodaje liczbę do obrony peta |
