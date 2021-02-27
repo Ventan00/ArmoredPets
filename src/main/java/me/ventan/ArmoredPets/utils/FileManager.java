@@ -65,7 +65,9 @@ public class FileManager {
         if(!file.exists())
             return false;
         try {
-            NewPetProfile.LastID=Integer.parseInt(new BufferedReader(new FileReader(file)).readLine());
+            FileReader reader = new FileReader(file);
+            NewPetProfile.LastID=Integer.parseInt(new BufferedReader(reader).readLine());
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
