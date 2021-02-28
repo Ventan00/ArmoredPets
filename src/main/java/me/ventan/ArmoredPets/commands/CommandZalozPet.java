@@ -70,15 +70,15 @@ public class CommandZalozPet implements CommandExecutor {
         return Integer.parseInt(ID.substring(6));
     }
     //extract EXP
-    public int eEXP(String EXP){
+    public long eEXP(String EXP){
         Pattern p = Pattern.compile("(§fExp: §a)(\\d+)([k]*)");
         Matcher m = p.matcher(EXP);
         m.find();
         if(!m.group(3).isEmpty()){
-            return (int)(Integer.parseInt(m.group(2)) * Math.pow(1000,m.group(3).length()));
+            return (long)(Integer.parseInt(m.group(2)) * Math.pow(1000,m.group(3).length()));
         }
         else {
-            return Integer.parseInt(m.group(2));
+            return Long.parseLong(m.group(2));
         }
     }
     //extractUpdates

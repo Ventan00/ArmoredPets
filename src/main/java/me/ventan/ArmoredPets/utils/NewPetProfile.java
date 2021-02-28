@@ -34,7 +34,7 @@ public class NewPetProfile {
 
     //lvl parameters
     private long exp;
-    private int LVL=0;
+    private int LVL=1;
     private static final float expModifier = 0.07f;
 
     //abilities
@@ -55,7 +55,6 @@ public class NewPetProfile {
         this.defence=type.baseDefence;
         this.drop=type.baseDrop;
         exp=0;
-        LVL=0;
         updates=0;
     }
 
@@ -69,7 +68,7 @@ public class NewPetProfile {
         this.defence = defence;
         this.drop = drop;
         this.updates = updates;
-        while(MyLvlExp.instance.getPd(LVL+1)<exp)
+        while(LVL<=150 && MyLvlExp.instance.getPd(LVL)<exp)
             LVL++;
     }
 
@@ -249,13 +248,13 @@ public class NewPetProfile {
 
     public void addExp(long amount){
         exp+=amount;
-        if(LVL<105 && MyLvlExp.instance.getPd(LVL)<exp){
+        if(LVL<=105 && MyLvlExp.instance.getPd(LVL)<=exp){
             LVL += 1;
             attack += attack * expModifier;
             defence += defence * expModifier;
             luck += luck * expModifier;
             drop += drop * expModifier;
-            while(LVL<105 && MyLvlExp.instance.getPd(LVL)<exp) {
+            while(LVL<=105 && MyLvlExp.instance.getPd(LVL)<=exp) {
                 LVL += 1;
                 attack += attack * expModifier;
                 defence += defence * expModifier;
