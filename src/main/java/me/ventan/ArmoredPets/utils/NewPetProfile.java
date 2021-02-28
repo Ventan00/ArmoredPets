@@ -5,10 +5,14 @@ import com.google.gson.JsonObject;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyLvlExp;
 import me.ventan.ArmoredPets.Math.MyMath;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 //import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -91,6 +95,8 @@ public class NewPetProfile {
             float val=0f;
             float toAdd=0.05f;
             long timestamp=System.currentTimeMillis()+40*1000;
+            long particleTimestamp=System.currentTimeMillis()+400;
+            boolean particleType=false;
 
             @Override
             public void run() {
@@ -103,8 +109,39 @@ public class NewPetProfile {
                 armorstand.teleport(player.getLocation().add(parametryToAdd[0],1+val,parametryToAdd[1]));
                 if(timestamp<=System.currentTimeMillis()){
                     timestamp=System.currentTimeMillis()+40*1000;
-                    player.getWorld().playSound(armorstand.getLocation(), Sound.BAT_LOOP, 3.0f,1.094f);
+                    player.getWorld().playSound(armorstand.getLocation(), Sound.BAT_IDLE, 3.0f,1.094f);
                 }
+
+                if(particleTimestamp<=System.currentTimeMillis()){
+                    Location temp = armorstand.getLocation();
+                    temp.setY(player.getLocation().getY()+1.5f);
+                    PacketPlayOutWorldParticles packet;
+                    if(particleType){
+                    packet = new PacketPlayOutWorldParticles(
+                            EnumParticle.FLAME,
+                            true,
+                            (float) temp.getX(),
+                            (float) temp.getY(),
+                            (float) temp.getZ(),
+                            0, 0, 0, 0, 1);
+                        particleType=false;
+                    }else{
+                        packet = new PacketPlayOutWorldParticles(
+                                EnumParticle.FIREWORKS_SPARK,
+                                true,
+                                (float) temp.getX(),
+                                (float) temp.getY(),
+                                (float) temp.getZ(),
+                                0, 0, 0, 0, 1);
+                        particleType=true;
+                    }
+                    armorstand.getNearbyEntities(20,20,20)
+                            .stream()
+                            .filter(entity -> entity instanceof Player)
+                            .forEach(entity -> ((CraftPlayer)entity).getHandle().playerConnection.sendPacket(packet));
+                    particleTimestamp+=400;
+                }
+
                 /*ParticleBuilder particleBuilder = new ParticleBuilder(Particle.END_ROD);
                 particleBuilder.location(armorstand.getLocation());
                 particleBuilder.count(1);
@@ -137,7 +174,7 @@ public class NewPetProfile {
         String EXP = ChatColor.WHITE+"Exp: "+ChatColor.GREEN+generateExp(exp)+ChatColor.WHITE+"/"+ChatColor.GREEN+generateMaxEXPForLevel(LVL);
         String Luck = ChatColor.GREEN+"Szczescie: "+luck;
         String Attack = ChatColor.RED+"Atak: "+attack;
-        String Obrona = ChatColor.BLUE+"Atak: "+defence;
+        String Obrona = ChatColor.BLUE+"Obrona: "+defence;
         String Drop = ChatColor.GOLD+"Drop: "+drop;
         String updts= ChatColor.DARK_GRAY+"Ulepszenia: "+updates+"/3";
         itemMeta.setLore(Arrays.asList(ID,rarity,minlvl,EXP,Lvl,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,Drop,updts));
@@ -212,8 +249,13 @@ public class NewPetProfile {
 
     public void addExp(long amount){
         exp+=amount;
-        if(MyLvlExp.instance.getPd(LVL+1)<exp){
-            while(MyLvlExp.instance.getPd(LVL+1)<exp) {
+        if(LVL<105 && MyLvlExp.instance.getPd(LVL)<exp){
+            LVL += 1;
+            attack += attack * expModifier;
+            defence += defence * expModifier;
+            luck += luck * expModifier;
+            drop += drop * expModifier;
+            while(LVL<105 && MyLvlExp.instance.getPd(LVL)<exp) {
                 LVL += 1;
                 attack += attack * expModifier;
                 defence += defence * expModifier;

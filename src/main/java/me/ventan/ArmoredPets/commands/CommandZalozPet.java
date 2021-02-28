@@ -28,7 +28,7 @@ public class CommandZalozPet implements CommandExecutor {
             if(MainArmoredPets.getInstance().playerHasPet(player))
                 return false;
             ItemStack item = player.getInventory().getItemInHand();
-            if(item==null)
+            if(item==null || item.getItemMeta()==null || item.getItemMeta().getLore()==null)
             {
                 return false;
             }

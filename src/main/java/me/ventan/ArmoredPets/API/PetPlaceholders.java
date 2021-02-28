@@ -63,11 +63,22 @@ public class PetPlaceholders extends PlaceholderExpansion {
         }
         else {
             //test placeholder add points
-            Pattern pattern = Pattern.compile("(dodaj_)(.*)(_)(\\d+\\.*\\d*)");
+            Pattern pattern;
+            if(p==null){
+                pattern = Pattern.compile("(dodaj_)(.*)(_)(\\d+\\.*\\d*)(_)(.+)");
+                Matcher tmp = pattern.matcher(identifier);
+                if(tmp.find()){
+                    p=MainArmoredPets.getInstance().getServer().getPlayer(tmp.group(6));
+                }else{
+                    return String.valueOf(false);
+                }
+            }else {
+                pattern = Pattern.compile("(dodaj_)(.*)(_)(\\d+\\.*\\d*)");
+            }
             Matcher matcher = pattern.matcher(identifier);
             if(matcher.find()){
                 if(!MainArmoredPets.getInstance().playerHasPet(p)){
-                    return String.valueOf(false);
+                    return "Brak peta!";
                 }
                 switch (matcher.group(2)){
                     case "atak":{
@@ -87,7 +98,8 @@ public class PetPlaceholders extends PlaceholderExpansion {
                         return String.valueOf(true);
                     }
                     case "exp":{
-                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addExp(Long.parseLong(matcher.group(4)));
+
+                        MainArmoredPets.getInstance().getProfileOfPlayersPet(p).addExp((new Double(Double.parseDouble(matcher.group(4))).longValue()));
                         return String.valueOf(true);
                     }
                     default:

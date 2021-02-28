@@ -11,6 +11,6 @@ public class MyLvlExp {
     }
 
     public long getPd(int lvl) {
-        return lvlPdBariers[lvl];
+        return lvlPdBariers[lvl-1];
     }
 }

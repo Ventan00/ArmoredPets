@@ -38,6 +38,9 @@ public class InventoryClick implements Listener {
                         if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Zidentyfikuj!")){
                             getRandomPet(p);
                             p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
+                            if(p.getInventory().getItemInHand().getAmount()==1){
+                                p.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                            }
                             p.closeInventory();
                         }else if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+"Ulepsz peta!")){
                             openUpgradeMenu(p);
@@ -176,7 +179,7 @@ public class InventoryClick implements Listener {
 
     private void addLvlToPet(Player p) {
         NewPetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(p);
-        profile.addExp(MyLvlExp.instance.getPd(profile.getLVL()+9));
+        profile.addExp(MyLvlExp.instance.getPd(profile.getLVL()+1));
     }
 
     private void destroypet(Player player) {
@@ -206,8 +209,8 @@ public class InventoryClick implements Listener {
 
         ItemStack expBottle = new ItemStack(Material.EXP_BOTTLE);
         meta=expBottle.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN+"Zwiększ lvl peta o 10 poziomów!");
-        meta.setLore(Arrays.asList(ChatColor.GREEN+"Bierze z ekwipunku "+ChatColor.LIGHT_PURPLE+"Kamień poziomu peta",ChatColor.GREEN+"i dodaje 10 poziomów petowi",ChatColor.DARK_RED+"Maksymalny poziom peta to 105"));
+        meta.setDisplayName(ChatColor.DARK_GREEN+"Zwiększ lvl peta o 1 poziom!");
+        meta.setLore(Arrays.asList(ChatColor.GREEN+"Bierze z ekwipunku "+ChatColor.LIGHT_PURPLE+"Kamień poziomu peta",ChatColor.GREEN+"i dodaje poziom petowi",ChatColor.DARK_RED+"Maksymalny poziom peta to 105"));
         expBottle.setItemMeta(meta);
 
         ItemStack Kamien_ulepszenia = new ItemStack(Material.NETHER_STAR);
