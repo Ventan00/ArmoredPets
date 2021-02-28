@@ -49,11 +49,11 @@ Instrukcja:
 | %pet_attack% | zwraca atak zwierzaka |
 | %pet_defence% | zwraca obronę zwierzaka |
 | %pet_drop% | zwraca szansę na drop skrzyni peta |
-| %pet_dodaj_exp_liczba% | zwiększa exp zwierzaka o podaną liczbę |
-| %pet_dodaj_atak_liczba% | dodaje liczbę do ataku peta |
-| %pet_dodaj_obrona_liczba% | dodaje liczbę do obrony peta |
-| %pet_dodaj_szczescie_liczba% | dodaje liczbę do szczęścia peta |
-| %pet_dodaj_drop_liczba% | dodaje liczbę do szansy na drop skrzyni peta |
+| %pet_dodaj_exp_liczba_%player%% | zwiększa exp zwierzaka o podaną liczbę |
+| %pet_dodaj_atak_liczba_%player%% | dodaje liczbę do ataku peta |
+| %pet_dodaj_obrona_liczba_%player%% | dodaje liczbę do obrony peta |
+| %pet_dodaj_szczescie_liczba_%player%% | dodaje liczbę do szczęścia peta |
+| %pet_dodaj_drop_liczba_%player%% | dodaje liczbę do szansy na drop skrzyni peta |
 
 
 # Przykłady użycia pluginu wraz z skriptem:
