@@ -71,11 +71,28 @@ public class CommandZalozPet implements CommandExecutor {
     }
     //extract EXP
     public long eEXP(String EXP){
-        Pattern p = Pattern.compile("(§fExp: §a)(\\d+)([k]*)");
+        Pattern p = Pattern.compile("(§fExp: §a)(\\d+)([kmbt]*)");
         Matcher m = p.matcher(EXP);
         m.find();
         if(!m.group(3).isEmpty()){
-            return (long)(Integer.parseInt(m.group(2)) * Math.pow(1000,m.group(3).length()));
+            long multiplier;
+            switch (m.group(3)){
+                case "k":
+                    multiplier=1000L;
+                    break;
+                case "m":
+                    multiplier=1000000L;
+                    break;
+                case "b":
+                    multiplier=1000000L;
+                    break;
+                case "t":
+                    multiplier=1000000000L;
+                    break;
+                default:
+                    multiplier=1L;
+            }
+            return Integer.parseInt(m.group(2)) * multiplier;
         }
         else {
             return Long.parseLong(m.group(2));

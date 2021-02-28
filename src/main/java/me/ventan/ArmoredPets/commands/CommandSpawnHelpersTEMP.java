@@ -22,7 +22,7 @@ public class CommandSpawnHelpersTEMP implements CommandExecutor {
             ItemStack LVLSTONE = new ItemStack(Material.INK_SACK, 1 ,(short) 12);
             ItemMeta meta = LVLSTONE.getItemMeta();
             meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta");
-            meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Pozwala dodać 10 poziomów Twojemu petowi u zoologa"));
+            meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Pozwala dodać poziom Twojemu petowi u zoologa"));
             LVLSTONE.setItemMeta(meta);
             player.getInventory().addItem(LVLSTONE);
         }

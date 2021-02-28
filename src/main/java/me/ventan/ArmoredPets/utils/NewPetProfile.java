@@ -20,6 +20,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 
 
@@ -248,13 +250,13 @@ public class NewPetProfile {
 
     public void addExp(long amount){
         exp+=amount;
-        if(LVL<=105 && MyLvlExp.instance.getPd(LVL)<=exp){
+        if(LVL<105 && MyLvlExp.instance.getPd(LVL)<=exp){
             LVL += 1;
             attack += attack * expModifier;
             defence += defence * expModifier;
             luck += luck * expModifier;
             drop += drop * expModifier;
-            while(LVL<=105 && MyLvlExp.instance.getPd(LVL)<=exp) {
+            while(LVL<105 && MyLvlExp.instance.getPd(LVL)<=exp) {
                 LVL += 1;
                 attack += attack * expModifier;
                 defence += defence * expModifier;
@@ -281,8 +283,19 @@ public class NewPetProfile {
         return me;
     }
 
+    public static String formatValue(double value) {
+        String[] suffix = new String[]{"","k", "m", "b", "t"};
+        String r = new DecimalFormat("##0E0").format(value);
+        r = r.replaceAll("E[0-9]", suffix[Character.getNumericValue(r.charAt(r.length() - 1)) / 3]);
+        while(r.length() > 4 || r.matches("[0-9]+\\.[a-z]")){
+            r = r.substring(0, r.length()-2) + r.substring(r.length() - 1);
+        }
+        return r;
+    }
+
     public static String generateMaxEXPForLevel(int LVL){
-        StringBuilder output = new StringBuilder();
+        return formatValue(new Long(MyLvlExp.instance.getPd(LVL)).doubleValue());
+        /*StringBuilder output = new StringBuilder();
         String longL= Long.toString(MyLvlExp.instance.getPd(LVL));
         int length = longL.length();
         if(length>5) {
@@ -313,10 +326,11 @@ public class NewPetProfile {
         }
         else{
             return longL;
-        }
+        }*/
     }
     public static String generateExp(long EXP){
-        StringBuilder output = new StringBuilder();
+        return formatValue(new Long(EXP).doubleValue());
+        /*StringBuilder output = new StringBuilder();
         String longL = String.valueOf(EXP);
         int length = longL.length();
         if(length>5) {
@@ -347,6 +361,6 @@ public class NewPetProfile {
         }
         else{
             return longL;
-        }
+        }*/
     }
 }

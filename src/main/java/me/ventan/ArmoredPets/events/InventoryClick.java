@@ -37,9 +37,10 @@ public class InventoryClick implements Listener {
                     if(event.getCurrentItem().getItemMeta().getDisplayName()!=null){
                         if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Zidentyfikuj!")){
                             getRandomPet(p);
-                            p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
                             if(p.getInventory().getItemInHand().getAmount()==1){
                                 p.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                            }else {
+                                p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount() - 1);
                             }
                             p.closeInventory();
                         }else if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+"Ulepsz peta!")){
@@ -61,7 +62,12 @@ public class InventoryClick implements Listener {
                 if(p.getInventory().getItemInHand()!=null && p.getInventory().getItemInHand().getItemMeta()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName()!=null) {
                     if(p.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta")){
                         addLvlToPet(p);
-                        p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
+                        if(p.getInventory().getItemInHand().getAmount()==1){
+                            p.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                        }else {
+                            p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount() - 1);
+                        }
+
                     }
                 }
             }
@@ -179,7 +185,7 @@ public class InventoryClick implements Listener {
 
     private void addLvlToPet(Player p) {
         NewPetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(p);
-        profile.addExp(MyLvlExp.instance.getPd(profile.getLVL()+1));
+        profile.addExp(MyLvlExp.instance.getPd(profile.getLVL()+1)-MyLvlExp.instance.getPd(profile.getLVL())+1);
     }
 
     private void destroypet(Player player) {
