@@ -1,13 +1,13 @@
 package me.ventan.ArmoredPets.utils;
 
-import com.destroystokyo.paper.ParticleBuilder;
+//import com.destroystokyo.paper.ParticleBuilder;
 import com.google.gson.JsonObject;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyLvlExp;
 import me.ventan.ArmoredPets.Math.MyMath;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Particle;
+//import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class NewPetProfile {
         this.defence=type.baseDefence;
         this.drop=type.baseDrop;
         exp=0;
-        LVL=1;
+        LVL=0;
         updates=0;
     }
 
@@ -77,11 +77,11 @@ public class NewPetProfile {
         armorstand = (ArmorStand) loc.getWorld().spawn(loc,ArmorStand.class);
         armorstand.setCustomName(type.nickColor+type.toString().substring(0, 1).toUpperCase()+type.toString().substring(1)  +ChatColor.WHITE+" ("+ChatColor.AQUA+"Lvl "+LVL+ChatColor.WHITE+")");
         armorstand.setGravity(false);
-        armorstand.setCanMove(true);
+        //armorstand.setCanMove(true);
         armorstand.setCustomNameVisible(true);
         armorstand.setVisible(false);
         armorstand.setCanPickupItems(false);
-        armorstand.setCollidable(false);
+        //armorstand.setCollidable(false);
         armorstand.setSmall(true);
         ItemStack head = new ItemStack(skullCreator.getSkull(type.texture));
         armorstand.setHelmet(head);
@@ -103,11 +103,13 @@ public class NewPetProfile {
                 armorstand.teleport(player.getLocation().add(parametryToAdd[0],1+val,parametryToAdd[1]));
                 if(timestamp<=System.currentTimeMillis()){
                     timestamp=System.currentTimeMillis()+40*1000;
-                    player.getWorld().playSound(armorstand.getLocation(), Sound.ENTITY_BAT_AMBIENT, 3.0f,1.094f);
+                    player.getWorld().playSound(armorstand.getLocation(), Sound.BAT_LOOP, 3.0f,1.094f);
                 }
-                ParticleBuilder particleBuilder = new ParticleBuilder(Particle.END_ROD);
+                /*ParticleBuilder particleBuilder = new ParticleBuilder(Particle.END_ROD);
+                particleBuilder.location(armorstand.getLocation());
                 particleBuilder.count(1);
                 particleBuilder.receivers(10);
+                particleBuilder.spawn();*/
             }
         }.runTaskTimer(MainArmoredPets.getInstance(),20,1);
         MainArmoredPets.getInstance().addPetToPlayer(player,this);
@@ -128,7 +130,6 @@ public class NewPetProfile {
         ItemStack head = new ItemStack(skullCreator.getSkull(type.texture));
         ItemMeta itemMeta = head.getItemMeta();
         itemMeta.setDisplayName(type.nickColor + type.toString());
-        head.setItemMeta(itemMeta);
         String ID = ChatColor.DARK_GRAY+"ID: " + this.ID;
         String rarity = ChatColor.WHITE + "Rzadkosc: " + type.rarity.color+type.rarity.toString();
         String minlvl = ChatColor.WHITE + "Wymagany poziom: " +ChatColor.GREEN+ type.minLvl;
@@ -139,7 +140,8 @@ public class NewPetProfile {
         String Obrona = ChatColor.BLUE+"Atak: "+defence;
         String Drop = ChatColor.GOLD+"Drop: "+drop;
         String updts= ChatColor.DARK_GRAY+"Ulepszenia: "+updates+"/3";
-        head.setLore(Arrays.asList(ID,rarity,minlvl,EXP,Lvl,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,Drop,updts));
+        itemMeta.setLore(Arrays.asList(ID,rarity,minlvl,EXP,Lvl,ChatColor.WHITE+"Bonusy:",Luck,Attack,Obrona,Drop,updts));
+        head.setItemMeta(itemMeta);
         return head;
     }
 
@@ -208,7 +210,6 @@ public class NewPetProfile {
         drop+=amount;
     }
 
-    // TODO: 26.02.2021  dopisać system zwiększania lvl i komunikatów do gracza
     public void addExp(long amount){
         exp+=amount;
         if(MyLvlExp.instance.getPd(LVL+1)<exp){

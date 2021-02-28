@@ -1,6 +1,5 @@
 package me.ventan.ArmoredPets.commands;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.Math.MyMath;
 import me.ventan.ArmoredPets.utils.FileManager;
@@ -28,14 +27,14 @@ public class CommandZalozPet implements CommandExecutor {
             Player player = (Player) commandSender;
             if(MainArmoredPets.getInstance().playerHasPet(player))
                 return false;
-            ItemStack item = player.getInventory().getItemInMainHand();
+            ItemStack item = player.getInventory().getItemInHand();
             if(item==null)
             {
                 return false;
             }
-            List<String> parameters = item.getLore();
+            List<String> parameters = item.getItemMeta().getLore();
             String ID =parameters.get(0);
-            String EXP=parameters.get(4);
+            String EXP=parameters.get(3);
             String Luck = parameters.get(6);
             String Attack = parameters.get(7);
             String Defence = parameters.get(8);
@@ -44,7 +43,7 @@ public class CommandZalozPet implements CommandExecutor {
             String Type = item.getItemMeta().getDisplayName().substring(2);
             NewPetProfile profile = new NewPetProfile(eID(ID),Type,eEXP(EXP),stf(Luck),stf(Attack),stf(Defence),stf(Drop),eUpdates(updates));
             profile.spawn(player);
-            player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+            player.getInventory().setItemInHand(new ItemStack(Material.AIR));
             FileManager.savePlayer(player);
         }
         else {

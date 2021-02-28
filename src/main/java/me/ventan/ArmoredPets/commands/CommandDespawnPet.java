@@ -2,6 +2,7 @@ package me.ventan.ArmoredPets.commands;
 
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.utils.FileManager;
+import me.ventan.ArmoredPets.utils.NewPetProfile;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,8 +17,9 @@ public class CommandDespawnPet implements CommandExecutor {
             Player player = (Player) commandSender;
             MainArmoredPets main = MainArmoredPets.getInstance();
             if(main.playerHasPet(player)){
-                player.getInventory().addItem(main.getProfileOfPlayersPet(player).getItem());
-                main.removePetFromPlayer(player);
+                NewPetProfile pet = main.getProfileOfPlayersPet(player);
+                pet.despawn();
+                player.getInventory().addItem(pet.getItem());
                 FileManager.deletePlayer(player);
             }
             else {
@@ -26,11 +28,14 @@ public class CommandDespawnPet implements CommandExecutor {
             }
         }
         else{
-            //// TODO: 27.02.2021 usuwanie peta w konosoli dla gracza
             if(strings.length>0){
-                MainArmoredPets.getInstance().getServer().getOnlinePlayers()
+                Player player = MainArmoredPets.getInstance().getServer().getOnlinePlayers()
                         .stream()
-                        .filter(player -> player.getName().compareTo(strings[0])==0);
+                        .filter(p -> p.getName().compareTo(strings[0])==0).findFirst().get();
+                if(MainArmoredPets.getInstance().playerHasPet(player)){
+                    NewPetProfile profile = MainArmoredPets.getInstance().getProfileOfPlayersPet(player);
+                    profile.despawn();
+                }
             }
             commandSender.sendMessage("Później zaimplementuję tę funkcję dla konsoli ;)");
         }

@@ -37,7 +37,7 @@ public class InventoryClick implements Listener {
                     if(event.getCurrentItem().getItemMeta().getDisplayName()!=null){
                         if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Zidentyfikuj!")){
                             getRandomPet(p);
-                            p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
+                            p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
                             p.closeInventory();
                         }else if(event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+"Ulepsz peta!")){
                             openUpgradeMenu(p);
@@ -55,15 +55,15 @@ public class InventoryClick implements Listener {
                 potwierdzenie(p);
             }
             else if(event.getSlot()==13){
-                if(p.getInventory().getItemInMainHand()!=null && p.getInventory().getItemInMainHand().getItemMeta()!=null && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()!=null) {
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta")){
+                if(p.getInventory().getItemInHand()!=null && p.getInventory().getItemInHand().getItemMeta()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName()!=null) {
+                    if(p.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta")){
                         addLvlToPet(p);
-                        p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
+                        p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
                     }
                 }
             }
             else if(event.getSlot()==15){
-                if(p.getInventory().getItemInMainHand()!=null && p.getInventory().getItemInMainHand().getItemMeta()!=null && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()!=null && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.BLUE+"Kamień ulepszenia peta")) {
+                if(p.getInventory().getItemInHand()!=null && p.getInventory().getItemInHand().getItemMeta()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.BLUE+"Kamień ulepszenia peta")) {
                     addRandomAbilityToPet(p);
                 }else
                     p.sendMessage(ChatColor.RED+"Musisz trzymać "+ChatColor.BLUE+"Kamień ulepszenia peta "+ChatColor.RED+"w ręce");
@@ -77,8 +77,8 @@ public class InventoryClick implements Listener {
                 ItemMeta meta = PETSTATS.getItemMeta();
                 meta.setDisplayName(ChatColor.BLUE+"Kamień ulepszenia peta");
                 meta.setLore(Arrays.asList(ChatColor.BLUE+"Pozwala dodać losową statystykę do Twojego peta",ChatColor.BLUE+"Możesz użyć tego przedmiotu u zoologa"));
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 PETSTATS.setItemMeta(meta);
-                PETSTATS.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 p.getInventory().addItem(PETSTATS);
                 p.closeInventory();
             }
@@ -167,7 +167,7 @@ public class InventoryClick implements Listener {
                 profile.addDrop(0.5f);
                 player.sendMessage(ChatColor.BLUE+"Dodano +0.5 do szansy na drop skrzyni peta");
             }
-            player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount()-1);
+            player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount()-1);
         }
         else
             player.sendMessage(ChatColor.RED+"Pet może mieć max 3 ulepszenia!");
@@ -215,8 +215,8 @@ public class InventoryClick implements Listener {
         meta=expBottle.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD+"Dodaj losową statystykę");
         meta.setLore(Arrays.asList(ChatColor.YELLOW+"Jeśli masz "+ChatColor.BLUE+"Kamień ulepszenia peta", ChatColor.YELLOW+"i jeśli masz $100k,",ChatColor.YELLOW+"to możesz dodać losową statysytkę swojemu petowi"));
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         Kamien_ulepszenia.setItemMeta(meta);
-        Kamien_ulepszenia.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
 
         menu_items[11] = destroy;

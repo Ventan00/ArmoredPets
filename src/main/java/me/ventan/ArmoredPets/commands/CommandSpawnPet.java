@@ -27,7 +27,6 @@ public class CommandSpawnPet implements CommandExecutor {
                 commandSender.sendMessage(ChatColor.RED+"Typy mobów: kurczak, pszczolka, slimaczek, lis, mrowka, ptaszek");
             }
 
-
         }
         return true;
     }

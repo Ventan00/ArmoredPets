@@ -13,12 +13,13 @@ public class PutOnPetShiftClick implements Listener {
     public void onClick(PlayerInteractEvent event) {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             Player player = event.getPlayer();
-            ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-            PetType type = PetType.typeOrNull(item.getI18NDisplayName().substring(2));
-            // TODO: 27.02.2021 rozpisać to sensowniej 
-            if(player.isSneaking()){
-                player.performCommand("zalozpet");
-                event.setCancelled(true);
+            ItemStack item = event.getPlayer().getInventory().getItemInHand();
+            if(item.getItemMeta()!=null) {
+                PetType type = PetType.typeOrNull(item.getItemMeta().getDisplayName().substring(2));
+                if (player.isSneaking() && type != null) {
+                    player.performCommand("zalozpet");
+                    event.setCancelled(true);
+                }
             }
         }
     }

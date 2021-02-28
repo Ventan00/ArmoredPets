@@ -13,8 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collector;
 
 public class MainArmoredPets extends JavaPlugin {
     private static MainArmoredPets instance;
@@ -94,7 +92,8 @@ public class MainArmoredPets extends JavaPlugin {
         return petsOfPlayers.containsValue(profile);
     }
     public Player getPetOwner(NewPetProfile profile){
-        return petsOfPlayers.entrySet()
+        return petsOfPlayers
+                .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue()==profile)
                 .findFirst()
