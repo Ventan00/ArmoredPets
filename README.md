@@ -1,7 +1,9 @@
 
-```diff
-- JEST TO WERSJA PRE-RELASE v1.0!!! Nie wszystkie mechaniki opisane poniżej działają!!!!
-```
+
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![1.8.8](https://badgen.net/badge/minecraft/1.12.2/cyan)](https://badgen.net/badge/minecraft/1.12.2/cyan)
+[![version](https://badgen.net/badge/version/v1.01/red)](https://badgen.net/badge/version/v1.01/red)
+[![build](https://badgen.net/badge/build/passing/red)](https://badgen.net/badge/build/fail/red)
 
 [![ServerNet](https://i.imgur.com/EwBly0J.png)](https://servernet.pl/)
 # ArmoredPets
@@ -76,5 +78,5 @@ Być może dodam
 
 # Licencja
 
- **GPL-3.0 License**
+**GPL-3.0 License**
 
