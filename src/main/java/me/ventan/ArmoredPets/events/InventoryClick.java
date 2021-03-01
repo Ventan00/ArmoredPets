@@ -176,7 +176,11 @@ public class InventoryClick implements Listener {
                 profile.addDrop(0.5f);
                 player.sendMessage(ChatColor.BLUE+"Dodano +0.5 do szansy na drop skrzyni peta");
             }
-            player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount()-1);
+            if(player.getInventory().getItemInHand().getAmount()==1){
+                player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+            }else {
+                player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInHand().getAmount() - 1);
+            }
         }
         else
             player.sendMessage(ChatColor.RED+"Pet może mieć max 3 ulepszenia!");
