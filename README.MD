@@ -1,8 +1,8 @@
 
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![1.8.8](https://badgen.net/badge/minecraft/1.8.8/cyan)](https://badgen.net/badge/minecraft/1.8.8/cyan)
-[![version](https://badgen.net/badge/version/v1.01/red)](https://badgen.net/badge/version/v1.01/red)
+[![1.8.8](https://badgen.net/badge/minecraft/1.8.8/blue)](https://badgen.net/badge/minecraft/1.8.8/blue)
+[![version](https://badgen.net/badge/version/v1.01/blue)](https://badgen.net/badge/version/v1.01/blue)
 [![build](https://badgen.net/badge/build/passing/green)](https://badgen.net/badge/build/passing/green)
 
 [![ServerNet](https://i.imgur.com/EwBly0J.png)](https://servernet.pl/)
