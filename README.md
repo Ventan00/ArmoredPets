@@ -3,7 +3,7 @@
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![1.8.8](https://badgen.net/badge/minecraft/1.12.2/cyan)](https://badgen.net/badge/minecraft/1.12.2/cyan)
 [![version](https://badgen.net/badge/version/v1.01/red)](https://badgen.net/badge/version/v1.01/red)
-[![build](https://badgen.net/badge/build/passing/red)](https://badgen.net/badge/build/fail/red)
+[![build](https://badgen.net/badge/build/fail/red)](https://badgen.net/badge/build/fail/red)
 
 [![ServerNet](https://i.imgur.com/EwBly0J.png)](https://servernet.pl/)
 # ArmoredPets
