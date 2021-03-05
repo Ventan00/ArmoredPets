@@ -73,7 +73,8 @@ public class InventoryClick implements Listener {
             }
             else if(event.getSlot()==15){
                 if(p.getInventory().getItemInHand()!=null && p.getInventory().getItemInHand().getItemMeta()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName()!=null && p.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.BLUE+"Kamień ulepszenia peta")) {
-                    addRandomAbilityToPet(p);
+                    if(MainArmoredPets.getEconomy().getBalance(p)>=100000)
+                        addRandomAbilityToPet(p);
                 }else
                     p.sendMessage(ChatColor.RED+"Musisz trzymać "+ChatColor.BLUE+"Kamień ulepszenia peta "+ChatColor.RED+"w ręce");
             }
@@ -98,6 +99,7 @@ public class InventoryClick implements Listener {
     }
 
     private void getRandomPet(Player player) {
+        MainArmoredPets.getEconomy().withdrawPlayer(player,100000);
         Random random = new Random();
         int chance = random.nextInt(1000);
         if(chance<500){

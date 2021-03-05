@@ -6,8 +6,10 @@ import me.ventan.ArmoredPets.events.*;
 import me.ventan.ArmoredPets.utils.MyNPCTrait;
 import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.FileManager;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -17,10 +19,19 @@ import java.util.HashMap;
 public class MainArmoredPets extends JavaPlugin {
     private static MainArmoredPets instance;
     private HashMap<Player, NewPetProfile> petsOfPlayers;
+    private static Economy econ = null;
 
     @Override
     public void onEnable(){
         net.citizensnpcs.api.CitizensAPI.getTraitFactory().registerTrait(net.citizensnpcs.api.trait.TraitInfo.create(MyNPCTrait.class).withName("petTrait"));
+
+        if (!setupEconomy() ) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        
+
         File file = new File("plugins/ArmoredPets");
         File file2 = new File("plugins/ArmoredPets/players");
         File file3 = new File("plugins/ArmoredPets/lastID.yml");
@@ -63,6 +74,19 @@ public class MainArmoredPets extends JavaPlugin {
             new PetPlaceholders().register();
         }
     }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     @Override
     public void onDisable() {
         getLogger().info("Wylaczanie");
@@ -103,5 +127,8 @@ public class MainArmoredPets extends JavaPlugin {
     public boolean playerHasPet(Player player){return petsOfPlayers.containsKey(player);}
     public void removePetFromPlayer(Player player){
         petsOfPlayers.remove(player);
+    }
+    public static Economy getEconomy() {
+        return econ;
     }
 }

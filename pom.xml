@@ -25,6 +25,10 @@
             <id>everything</id>
             <url>http://repo.citizensnpcs.co/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
     <build>
         <plugins>
@@ -62,6 +66,12 @@
             <version>2.0.27-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
