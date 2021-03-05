@@ -39,25 +39,25 @@ public class PetPlaceholders extends PlaceholderExpansion {
         }
         else if(identifier.compareTo("luck")==0) {
             if(plugin.playerHasPet(p)){
-                return String.valueOf(plugin.getProfileOfPlayersPet(p).getLuck());
+                return String.format("%.2f",plugin.getProfileOfPlayersPet(p).getLuck());
             }
             else return "0";
         }
         else if(identifier.compareTo("attack")==0) {
             if(plugin.playerHasPet(p)){
-                return String.valueOf(plugin.getProfileOfPlayersPet(p).getAttack());
+                return String.format("%.2f",plugin.getProfileOfPlayersPet(p).getAttack());
             }
             else return "0";
         }
         else if(identifier.compareTo("defence")==0) {
             if(plugin.playerHasPet(p)){
-                return String.valueOf(plugin.getProfileOfPlayersPet(p).getDefence());
+                return String.format("%.2f",plugin.getProfileOfPlayersPet(p).getDefence());
             }
             else return "0";
         }
         else if(identifier.compareTo("drop")==0) {
             if(plugin.playerHasPet(p)){
-                return String.valueOf(plugin.getProfileOfPlayersPet(p).getDrop());
+                return String.format("%.2f",plugin.getProfileOfPlayersPet(p).getDrop());
             }
             else return "0";
         }else if(identifier.compareTo("lvl")==0) {
