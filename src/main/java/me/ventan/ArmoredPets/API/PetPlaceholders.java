@@ -37,29 +37,53 @@ public class PetPlaceholders extends PlaceholderExpansion {
                 return plugin.getProfileOfPlayersPet(p).getType().nickColor+plugin.getProfileOfPlayersPet(p).getType().toString();
             }
         }
-        else if(identifier.compareTo("lvl")==0) {
+        else if(identifier.compareTo("luck")==0) {
+            if(plugin.playerHasPet(p)){
+                return String.valueOf(plugin.getProfileOfPlayersPet(p).getLuck());
+            }
+            else return "0";
+        }
+        else if(identifier.compareTo("attack")==0) {
+            if(plugin.playerHasPet(p)){
+                return String.valueOf(plugin.getProfileOfPlayersPet(p).getAttack());
+            }
+            else return "0";
+        }
+        else if(identifier.compareTo("defence")==0) {
+            if(plugin.playerHasPet(p)){
+                return String.valueOf(plugin.getProfileOfPlayersPet(p).getDefence());
+            }
+            else return "0";
+        }
+        else if(identifier.compareTo("drop")==0) {
+            if(plugin.playerHasPet(p)){
+                return String.valueOf(plugin.getProfileOfPlayersPet(p).getDrop());
+            }
+            else return "0";
+        }else if(identifier.compareTo("lvl")==0) {
             if(plugin.playerHasPet(p)){
                 return String.valueOf(plugin.getProfileOfPlayersPet(p).getLVL());
             }
-            else return "Brak peta!";
+            else return "0";
         }
+
         else if(identifier.compareTo("exp")==0) {
             if(plugin.playerHasPet(p)){
                 return NewPetProfile.generateExp(plugin.getProfileOfPlayersPet(p).getExp());
             }
-            else return "Brak peta!";
+            else return "0";
         }
         else if(identifier.compareTo("maxExp")==0){
             if(plugin.playerHasPet(p)){
                 return NewPetProfile.generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
             }
-            else return "Brak peta!";
+            else return "0";
         }
         else if(identifier.compareTo("allExp")==0) {
             if(plugin.playerHasPet(p)){
                 return NewPetProfile.generateExp(plugin.getProfileOfPlayersPet(p).getExp())+"/"+NewPetProfile.generateMaxEXPForLevel(plugin.getProfileOfPlayersPet(p).getLVL());
             }
-            else return "Brak peta!";
+            else return "0";
         }
         else {
             //test placeholder add points
