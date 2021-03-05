@@ -7,6 +7,7 @@ import me.ventan.ArmoredPets.utils.MyNPCTrait;
 import me.ventan.ArmoredPets.utils.NewPetProfile;
 import me.ventan.ArmoredPets.utils.FileManager;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -20,6 +21,7 @@ public class MainArmoredPets extends JavaPlugin {
     private static MainArmoredPets instance;
     private HashMap<Player, NewPetProfile> petsOfPlayers;
     private static Economy econ = null;
+    public static Metrics metrics;
 
     @Override
     public void onEnable(){
@@ -30,7 +32,7 @@ public class MainArmoredPets extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        
+        metrics = new Metrics(this,10571);
 
         File file = new File("plugins/ArmoredPets");
         File file2 = new File("plugins/ArmoredPets/players");
