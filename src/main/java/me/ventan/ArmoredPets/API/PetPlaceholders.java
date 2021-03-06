@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +74,6 @@ public class PetPlaceholders extends PlaceholderExpansion {
             }
             else return "0";
         }
-
         else if(identifier.compareTo("exp")==0) {
             if(plugin.playerHasPet(p)){
                 return NewPetProfile.generateExp(plugin.getProfileOfPlayersPet(p).getExp());
@@ -100,8 +100,6 @@ public class PetPlaceholders extends PlaceholderExpansion {
                 Matcher tmp = pattern.matcher(identifier);
                 if(tmp.find()){
                     p=MainArmoredPets.getInstance().getServer().getPlayer(tmp.group(6));
-                }else{
-                    return String.valueOf(false);
                 }
             }else {
                 pattern = Pattern.compile("(dodaj_)(.*)(_)(\\d+\\.*\\d*)");
@@ -148,6 +146,7 @@ public class PetPlaceholders extends PlaceholderExpansion {
                             ItemMeta meta = unindentified.getItemMeta();
                             meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Niezidentyfikowany zwierzak");
                             meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Możesz zidentyfikować go u zoologa"));
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                             unindentified.setItemMeta(meta);
                             p.getInventory().addItem(unindentified);
                             return String.valueOf("true");
@@ -157,6 +156,7 @@ public class PetPlaceholders extends PlaceholderExpansion {
                             ItemMeta meta = LVLSTONE.getItemMeta();
                             meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta");
                             meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Pozwala dodać poziom Twojemu petowi u zoologa"));
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                             LVLSTONE.setItemMeta(meta);
                             p.getInventory().addItem(LVLSTONE);
                             return String.valueOf("true");
@@ -167,6 +167,7 @@ public class PetPlaceholders extends PlaceholderExpansion {
                             ItemMeta meta = PETSTATS.getItemMeta();
                             meta.setDisplayName(ChatColor.BLUE+"Kamień ulepszenia peta");
                             meta.setLore(Arrays.asList(ChatColor.BLUE+"Pozwala dodać losową statystykę do Twojego peta",ChatColor.BLUE+"Możesz użyć tego przedmiotu u zoologa"));
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                             PETSTATS.setItemMeta(meta);
                             p.getInventory().addItem(PETSTATS);
                             return String.valueOf("true");

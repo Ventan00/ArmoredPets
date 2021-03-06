@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,6 +24,7 @@ public class CommandSpawnHelpersTEMP implements CommandExecutor {
             ItemMeta meta = LVLSTONE.getItemMeta();
             meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta");
             meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Pozwala dodać poziom Twojemu petowi u zoologa"));
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             LVLSTONE.setItemMeta(meta);
             player.getInventory().addItem(LVLSTONE);
         }
@@ -32,6 +34,7 @@ public class CommandSpawnHelpersTEMP implements CommandExecutor {
             ItemMeta meta = unindentified.getItemMeta();
             meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Niezidentyfikowany zwierzak");
             meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Możesz zidentyfikować go u zoologa"));
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             unindentified.setItemMeta(meta);
             player.getInventory().addItem(unindentified);
         }
@@ -42,6 +45,7 @@ public class CommandSpawnHelpersTEMP implements CommandExecutor {
             ItemMeta meta = PETSTATS.getItemMeta();
             meta.setDisplayName(ChatColor.BLUE+"Kamień ulepszenia peta");
             meta.setLore(Arrays.asList(ChatColor.BLUE+"Pozwala dodać losową statystykę do Twojego peta",ChatColor.BLUE+"Możesz użyć tego przedmiotu u zoologa"));
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             PETSTATS.setItemMeta(meta);
             player.getInventory().addItem(PETSTATS);
         }
