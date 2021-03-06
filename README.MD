@@ -23,7 +23,7 @@
 Vault, Citizens**
 
 Instrukcja:
-- Obecnie plugin działa na silniku papermc w wersji 1.12.2 oraz spigot 1.8.8
+- Obecnie plugin działa na silniku spigot 1.8.8
 - Konieczne jest zaimportowanie pluginu https://github.com/CitizensDev/Citizens2 by tworzyć NPCty zarządzające ulepszeniem/ściąganiem zwierzaka
 - Konieczne jest zaimportowanie pluginu Vault https://github.com/MilkBowl/Vault by używać ekonomii.
 - Pobierz najnowsze wydanie z karty https://github.com/Ventan00/ArmoredPets/releases oraz wrzuć je do folderu plugins na serwerze
