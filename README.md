@@ -56,6 +56,9 @@ Instrukcja:
 | %pet_dodaj_obrona_liczba_%player%% | dodaje liczbę do obrony peta |
 | %pet_dodaj_szczescie_liczba_%player%% | dodaje liczbę do szczęścia peta |
 | %pet_dodaj_drop_liczba_%player%% | dodaje liczbę do szansy na drop skrzyni peta |
+| %give_kamienUlepsz_%player%% | daje graczowi kamień ulepszenia peta |
+| %give_kamienLVL_%player%% | daje graczowi kamień poziomu peta |
+| %give_niezidentyfikowany_%player%% | daje graczowi klatkę z petem |
 
 
 # Przykłady użycia pluginu wraz z skriptem:
