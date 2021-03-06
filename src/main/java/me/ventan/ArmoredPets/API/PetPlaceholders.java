@@ -3,9 +3,16 @@ package me.ventan.ArmoredPets.API;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.ventan.ArmoredPets.MainArmoredPets;
 import me.ventan.ArmoredPets.utils.NewPetProfile;
+import me.ventan.ArmoredPets.utils.skullCreator;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,6 +135,45 @@ public class PetPlaceholders extends PlaceholderExpansion {
                     }
                     default:
                         return String.valueOf(false);
+                }
+            }
+            else{
+                pattern = Pattern.compile("(give_)(.*)(_)(.*)");
+                matcher = pattern.matcher(identifier);
+                if(matcher.find()){
+                    p=MainArmoredPets.getInstance().getServer().getPlayer(matcher.group(4));
+                    switch (matcher.group(2)){
+                        case "niezidentyfikowany":{
+                            ItemStack unindentified = skullCreator.getSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhlNjUyNTM4NWY3NDgzMjJlZWNjNDE2ODliNjkwYWExZWJiYjIxNzJlYzJjNGEyZWFjMTRmMjJkOTRlZTNiYSJ9fX0=");
+                            ItemMeta meta = unindentified.getItemMeta();
+                            meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Niezidentyfikowany zwierzak");
+                            meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Możesz zidentyfikować go u zoologa"));
+                            unindentified.setItemMeta(meta);
+                            p.getInventory().addItem(unindentified);
+                            return String.valueOf("true");
+                        }
+                        case "kamienLVL":{
+                            ItemStack LVLSTONE = new ItemStack(Material.INK_SACK, 1 ,(short) 12);
+                            ItemMeta meta = LVLSTONE.getItemMeta();
+                            meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Kamień poziomu peta");
+                            meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+"Pozwala dodać poziom Twojemu petowi u zoologa"));
+                            LVLSTONE.setItemMeta(meta);
+                            p.getInventory().addItem(LVLSTONE);
+                            return String.valueOf("true");
+                        }
+                        case "kamienUlepsz":{
+                            ItemStack PETSTATS = new ItemStack(Material.NETHER_STAR);
+                            PETSTATS.addUnsafeEnchantment(Enchantment.DURABILITY,1);
+                            ItemMeta meta = PETSTATS.getItemMeta();
+                            meta.setDisplayName(ChatColor.BLUE+"Kamień ulepszenia peta");
+                            meta.setLore(Arrays.asList(ChatColor.BLUE+"Pozwala dodać losową statystykę do Twojego peta",ChatColor.BLUE+"Możesz użyć tego przedmiotu u zoologa"));
+                            PETSTATS.setItemMeta(meta);
+                            p.getInventory().addItem(PETSTATS);
+                            return String.valueOf("true");
+                        } default:{
+                            return String.valueOf("false");
+                        }
+                    }
                 }
             }
             return null;

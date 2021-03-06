@@ -4,7 +4,7 @@ version: 1.01
 author: Ventan
 website: www.servernet.pl
 description: Plugin na pety
-depend: [Citizens]
+depend: [Citizens, Vault]
 softdepend: [PlaceholderAPI]
 commands:
   spawnPet:
